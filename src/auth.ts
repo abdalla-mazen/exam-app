@@ -2,7 +2,6 @@ import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { LoginResponse } from "./lib/types/auth";
 
-
 declare module "next-auth" {}
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -29,8 +28,6 @@ export const authOptions: NextAuthOptions = {
         if ("code" in payload) {
           throw new Error(payload.message);
         }
-
-      
 
         return {
           accessToken: payload.token,

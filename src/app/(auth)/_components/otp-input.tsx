@@ -1,4 +1,5 @@
 "use client";
+
 import {
   InputOTP,
   InputOTPGroup,
@@ -43,7 +44,10 @@ export default function OtpInput() {
 
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="text-center mx-auto flex flex-col  items-center "
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         {/* OTP with Controller */}
         <Controller
           name="resetCode"

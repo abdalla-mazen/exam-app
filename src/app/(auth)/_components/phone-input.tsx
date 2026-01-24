@@ -2,7 +2,6 @@ import * as React from "react";
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
 import * as RPNInput from "react-phone-number-input";
 import flags from "react-phone-number-input/flags";
-
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -27,12 +26,12 @@ type PhoneInputProps = Omit<
 > &
   Omit<RPNInput.Props<typeof RPNInput.default>, "onChange"> & {
     onChange?: (value: RPNInput.Value) => void;
-     error?: boolean;
+    error?: boolean;
   };
 
 const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   React.forwardRef<React.ElementRef<typeof RPNInput.default>, PhoneInputProps>(
-    ({ className, onChange, value,...props }, ref) => {
+    ({ className, onChange, value, ...props }, ref) => {
       return (
         <RPNInput.default
           ref={ref}
@@ -42,9 +41,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
           inputComponent={InputComponent}
           smartCaret={false}
           value={value || undefined}
-           defaultCountry="EG"   
-              
- 
+          defaultCountry="EG"
           /**
            * Handles the onChange event.
            *
@@ -65,9 +62,12 @@ PhoneInput.displayName = "PhoneInput";
 const InputComponent = React.forwardRef<
   HTMLInputElement,
   React.ComponentProps<"input">
->(({ className,...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <Input
-    className={cn(" border border-gray-200 rounded-none placeholder:text-gray-400", className)}
+    className={cn(
+      " border border-gray-200 rounded-none placeholder:text-gray-400",
+      className,
+    )}
     {...props}
     ref={ref}
     placeholder="1012345678"

@@ -1,25 +1,37 @@
 "use client";
+
 import { Form } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 import PasswordInput from "./password-input";
 import { newPassSchema, NewPassValues } from "@/lib/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { LoaderCircle } from "lucide-react";
 import useNewPassword from "../createnewpassword/_hooks/use-newpassword";
+import { useEffect } from "react";
 
 export default function NewPasswordForm() {
+  // Mutation
   const { isPending, error, newPassword } = useNewPassword();
+
+  // Form
   const form = useForm<NewPassValues>({
     defaultValues: {
-      email: localStorage.getItem("email")!,
+      email: "",
       password: "",
       newPassword: "",
     },
     resolver: zodResolver(newPassSchema),
   });
+  useEffect(() => {
+    const email = localStorage.getItem("email");
+    if (email) {
+      form.setValue("email", email);
+    }
+  }, [form]);
+
+  // Function
   const onSubmit: SubmitHandler<NewPassValues> = async (values) => {
     newPassword(values);
   };
@@ -31,7 +43,7 @@ export default function NewPasswordForm() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className=" w-full">
               <PasswordInput />
-              <PasswordInput label="Confirm Password" name="confirmPassword" />
+              <PasswordInput label="Confirm Password" name="newPassword" />
             </div>
             {(form.formState.errors.password ||
               form.formState.errors.newPassword) && (

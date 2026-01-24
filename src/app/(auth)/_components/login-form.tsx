@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import PasswordInput from "./password-input";
 import { Form } from "@/components/ui/form";
@@ -50,7 +51,7 @@ export default function LoginForm() {
           {/* Feedback */}
           {(form.formState.errors.email || form.formState.errors.password) && (
             <>
-            {/* Error validation */}
+              {/* Error validation */}
               <div className="relative">
                 <CircleX
                   className="absolute bg-white rounded-sm w-fit -translate-y-1/2 left-1/2 -translate-x-1/2 z-10"

@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Form,
   FormControl,
@@ -51,8 +52,7 @@ export default function AccountForm() {
   }
 
   const handleCheck = useCallback(async () => {
-    const session = await getSession();
-    console.log("Session:", session);
+     await getSession();
   }, []);
 
   const onSubmit: SubmitHandler<
@@ -92,30 +92,28 @@ export default function AccountForm() {
       }
     }
     loadSession();
-  }, [form]); // Added form dependency
+  }, [form]);
 
   useEffect(() => {
     handleCheck();
-  }, [handleCheck]); // Added handleCheck dependency
+  }, [handleCheck]);
 
   const { isValid, isSubmitted } = form.formState;
 
   return (
     <>
-      <div className=" bg-white  h-full w-full  px-6 pt-6">
+      <div className="bg-white h-full w-full px-4 sm:px-6 pt-4 sm:pt-6">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
-              <div className="flex  gap-2 mb-4 justify-between  ">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-2 mb-4 justify-between">
                 {/* First name */}
                 <div className="w-full">
-                  {/* First name field */}
                   <FormField
                     control={form.control}
                     name="firstName"
                     render={({ field }) => (
                       <FormItem>
-                        {/* First name label */}
                         <FormLabel>First name</FormLabel>
                         <FormControl>
                           <Input
@@ -135,13 +133,11 @@ export default function AccountForm() {
                 </div>
                 {/* Last name */}
                 <div className="w-full">
-                  {/* Last name field */}
                   <FormField
                     control={form.control}
                     name="lastName"
                     render={({ field }) => (
                       <FormItem>
-                        {/* Last name label */}
                         <FormLabel>Last name</FormLabel>
                         <FormControl>
                           <Input
@@ -154,7 +150,6 @@ export default function AccountForm() {
                             {...field}
                           />
                         </FormControl>
-                        {/* Form message */}
                         <FormMessage />
                       </FormItem>
                     )}
@@ -169,7 +164,6 @@ export default function AccountForm() {
               name="username"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  {/* User label*/}
                   <FormLabel>UserName</FormLabel>
                   <FormControl>
                     <Input
@@ -182,7 +176,6 @@ export default function AccountForm() {
                       {...field}
                     />
                   </FormControl>
-                  {/* Form message */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -197,21 +190,19 @@ export default function AccountForm() {
               name="phone"
               render={({ field }) => (
                 <FormItem className="mb-4">
-                  {/* Phone label */}
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
                     <PhoneInput
                       defaultCountry="EG"
                       international
                       {...field}
-                      className={`placeholder:text-gray-400  rounded-none ${
+                      className={`placeholder:text-gray-400 rounded-none ${
                         form.formState.errors.phone
                           ? "border-red-600 border"
                           : "border-gray-200"
                       }`}
                     />
                   </FormControl>
-                  {/* Form message */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -235,7 +226,7 @@ export default function AccountForm() {
               </>
             )}
 
-            <div className="flex w-full justify-between gap-3.5 ">
+            <div className="flex flex-col sm:flex-row w-full justify-between gap-3.5">
               {/* Modal */}
               <DialogDemo onConfirm={deleteUser} />
               {/* Button */}

@@ -2,6 +2,7 @@ import { BookOpenCheck, ChevronLeft, Timer } from "lucide-react";
 import { DynamicBreadcrumb } from "../../_components/bread-crumb";
 import getExams from "@/lib/apis/exams.api";
 import Link from "next/link";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export const dynamic = "force-dynamic";
 export default async function page() {
@@ -17,7 +18,8 @@ export default async function page() {
     <>
       <div className="bg-white pt-0">
         {/* Breadcrumb navigation */}
-        <div className="p-4">
+        <div className="p-4 flex items-center">
+             <SidebarTrigger />
           <DynamicBreadcrumb />
         </div>
 

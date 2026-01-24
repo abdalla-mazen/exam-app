@@ -7,14 +7,16 @@ import Image from "next/image";
 import Link from "next/link";
 import useInfiniteDiplomas from "./_hooks/use-infinite-query";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 export default function DiplomsPage() {
-  const { data, fetchNextPage, hasNextPage ,isLoading} = useInfiniteDiplomas();
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteDiplomas();
 
   const diplomas = data?.pages.flatMap((page) => page.subjects) || [];
 
   return (
- <div className="bg-white pt-0">
-      <div className="p-4">
+    <div className="bg-white pt-0">
+      <div className="p-4 flex items-center">
+        <SidebarTrigger />
         <DynamicBreadcrumb />
       </div>
 
@@ -53,7 +55,7 @@ export default function DiplomsPage() {
               {diplomas.map((d) => (
                 <div
                   key={d._id}
-                  className="lg:w-1/3 sm:w-full md:w-1/2 p-2 relative"
+                  className="lg:w-1/3 w-full md:w-1/2 p-2 relative"
                 >
                   <Link href={"/dashboard/exams"}>
                     <Image

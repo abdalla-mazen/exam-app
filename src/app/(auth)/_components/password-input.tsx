@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -22,9 +21,9 @@ export default function PasswordInput({
   name = "password",
   label = "Password",
 }: PasswordInputProps) {
-  const { control , formState } = useFormContext();
+  const { control, formState } = useFormContext();
   const [show, setShow] = useState(false);
- 
+
   return (
     <FormField
       control={control}
@@ -37,11 +36,11 @@ export default function PasswordInput({
               <Input
                 placeholder="************"
                 type={show ? "text" : "password"}
-              className={`placeholder:text-gray-400 border rounded-none ${
-  formState.errors[name] ? "border-red-600" : "border-gray-200"
-}`}
-
+                className={`placeholder:text-gray-400 border rounded-none ${
+                  formState.errors[name] ? "border-red-600" : "border-gray-200"
+                }`}
                 {...field}
+                value={field.value ?? ""}
               />
             </FormControl>
             <button
@@ -53,7 +52,6 @@ export default function PasswordInput({
             </button>
           </div>
           <FormMessage />
-        
         </FormItem>
       )}
     />

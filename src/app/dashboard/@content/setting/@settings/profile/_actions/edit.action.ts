@@ -11,9 +11,8 @@ export async function EditAction(data: Record<string, FormDataEntryValue>) {
       cookies: Object.fromEntries(
         cookies()
           .getAll()
-          .map((c) => [c.name, c.value])
+          .map((c) => [c.name, c.value]),
       ),
-      
     } as unknown as IncomingMessage & { cookies: Record<string, string> },
     secret: process.env.NEXTAUTH_SECRET,
   });
