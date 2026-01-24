@@ -10,6 +10,5 @@ export async function registerUser(data: Record<string, FormDataEntryValue>) {
     },
   });
   const payload = await response.json();
-console.log(payload)
   return payload;
 }

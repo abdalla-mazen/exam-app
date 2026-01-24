@@ -4,7 +4,7 @@ import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 
 export async function updatePasswordAction(
-  data: Record<string, FormDataEntryValue>
+  data: Record<string, FormDataEntryValue>,
 ) {
   // Get JWT token from cookies
   const token = await getToken({
@@ -12,7 +12,7 @@ export async function updatePasswordAction(
       cookies: Object.fromEntries(
         cookies()
           .getAll()
-          .map((c) => [c.name, c.value])
+          .map((c) => [c.name, c.value]),
       ),
     } as unknown as IncomingMessage & { cookies: Record<string, string> },
     secret: process.env.NEXTAUTH_SECRET,

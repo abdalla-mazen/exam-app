@@ -35,7 +35,7 @@ export default async function SideBarSetting() {
         </nav>
 
         {/* Footer with logout button */}
-        <footer className="text-sm text-gray-400 flex gap-2 items-center ">
+        <footer className="text-sm text-gray-400 pt-2 md:pt-0 flex gap-2 items-center ">
           <LogOutButton />
         </footer>
       </aside>

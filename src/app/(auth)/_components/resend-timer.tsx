@@ -27,7 +27,7 @@ export default function ResendCode() {
   };
 
   return (
-    <span className="text-sm text-gray-700">
+    <span className="text-sm text-gray-700 py-2">
       Didn’t receive the code?{" "}
       {timeLeft > 0 ? (
         <span className="text-gray-500">Resend in {timeLeft}s</span>

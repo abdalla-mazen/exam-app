@@ -8,7 +8,6 @@ export default function useEdit() {
       const response = await EditAction(values);
       //   API errors
       if (response?.error || "code" in response) {
-        console.log(response);
         throw new Error(response?.message || "Something went wrong");
       }
       return response;

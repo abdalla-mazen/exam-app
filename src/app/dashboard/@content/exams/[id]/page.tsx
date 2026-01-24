@@ -1,4 +1,3 @@
-
 "use client";
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
@@ -27,6 +26,7 @@ import {
   CorrectQuestion,
   QuestionsApiResponse,
 } from "@/lib/types/result";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 // Improved types for API response
 interface ApiQuestionResult {
@@ -89,7 +89,7 @@ export default function ExamPage({ params }: Props) {
   };
 
   const convertAnswersToRecord = (
-    answers: Answer[] | Record<string, string> | undefined
+    answers: Answer[] | Record<string, string> | undefined,
   ): Record<string, string> => {
     if (!answers) return {};
 
@@ -131,7 +131,7 @@ export default function ExamPage({ params }: Props) {
               ? convertAnswersToRecord(originalQuestion.answers)
               : {},
           };
-        }
+        },
       ),
       correctQuestions: apiResult.correctQuestions.map(
         (correctQ, index): CorrectQuestion => {
@@ -146,7 +146,7 @@ export default function ExamPage({ params }: Props) {
               ? convertAnswersToRecord(originalQuestion.answers)
               : {},
           };
-        }
+        },
       ),
     };
   };
@@ -166,7 +166,7 @@ export default function ExamPage({ params }: Props) {
 
     try {
       const response = (await submitAnswer(
-        payload as unknown as Record<string, FormDataEntryValue>
+        payload as unknown as Record<string, FormDataEntryValue>,
       )) as ApiExamResult;
 
       const transformedData = transformApiResult(response);
@@ -207,7 +207,7 @@ export default function ExamPage({ params }: Props) {
 
         const remaining = Math.max(
           0,
-          Math.floor((endTime - Date.now()) / 1000)
+          Math.floor((endTime - Date.now()) / 1000),
         );
         setTimeLeft(remaining);
       } catch (error) {
@@ -295,21 +295,22 @@ export default function ExamPage({ params }: Props) {
   return (
     <div className="pt-0 flex flex-col min-h-screen">
       {/* Breadcrumb */}
-      <div className="p-4">
+      <div className="p-4 flex items-center bg-white">
+        <SidebarTrigger />
         <DynamicBreadcrumb />
       </div>
 
       {/* Exam Header */}
-      <div className="p-6 bg-gray-100">
+      <div className="p-4 sm:p-6 bg-gray-100">
         <div className="flex justify-between gap-2">
           <div className="border border-blue-600 flex items-center">
             <Link href={"/dashboard/exams"}>
               <ChevronLeft className="mx-2 text-blue-600" />
             </Link>
           </div>
-          <div className="flex bg-blue-600 p-4 gap-4 text-white w-full">
-            <CircleQuestionMark size={45} />
-            <h1 className="text-3xl font-semibold">
+          <div className="flex bg-blue-600 p-3 sm:p-4 gap-2 sm:gap-4 text-white w-full">
+            <CircleQuestionMark className="w-8 h-8 sm:w-11 sm:h-11 flex-shrink-0" />
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold break-words">
               {q.exam?.title || "Questions"}
             </h1>
           </div>
@@ -318,7 +319,7 @@ export default function ExamPage({ params }: Props) {
 
       {/* Exam Body */}
       {!result ? (
-        <div className="p-6 space-y-6 mx-6 bg-white flex-1">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 mx-2 sm:mx-6 bg-white flex-1">
           <Progress
             value={((current + 1) / questions.length) * 100}
             className="bg-blue-50 [&>div]:bg-blue-600"
@@ -327,12 +328,12 @@ export default function ExamPage({ params }: Props) {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(
-                current < questions.length - 1 ? handleNext : handleSubmitAll
+                current < questions.length - 1 ? handleNext : handleSubmitAll,
               )}
-              className="space-y-6 h-full flex flex-col"
+              className="space-y-4 sm:space-y-6 h-full flex flex-col"
             >
               <section className="flex-1">
-                <h2 className="text-blue-600 font-semibold text-2xl mb-6">
+                <h2 className="text-blue-600 font-semibold text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">
                   Question {current + 1} of {questions.length}: {q.question}
                 </h2>
 
@@ -346,7 +347,7 @@ export default function ExamPage({ params }: Props) {
                         <RadioGroup
                           value={field.value}
                           onValueChange={field.onChange}
-                          className="space-y-3"
+                          className="space-y-2 sm:space-y-3"
                         >
                           {q.answers?.map((ans) => (
                             <Label
@@ -354,13 +355,13 @@ export default function ExamPage({ params }: Props) {
                               key={ans.key}
                               className="cursor-pointer"
                             >
-                              <div className="flex items-center space-x-3 bg-gray-50 p-4 rounded-lg hover:bg-gray-100 transition-colors">
+                              <div className="flex items-center space-x-2 sm:space-x-3 bg-gray-50 p-3 sm:p-4 rounded-lg hover:bg-gray-100 transition-colors">
                                 <RadioGroupItem
                                   value={ans.key}
                                   id={`${q._id}-${ans.key}`}
-                                  className="border-gray-400 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white data-[state=checked]:border-blue-600 fill-none"
+                                  className="border-gray-400 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white data-[state=checked]:border-blue-600 fill-none flex-shrink-0"
                                 />
-                                <span className="text-sm font-medium">
+                                <span className="text-sm font-medium break-words">
                                   {ans.answer}
                                 </span>
                               </div>
@@ -384,24 +385,24 @@ export default function ExamPage({ params }: Props) {
                 />
               </section>
 
-              <div className="flex justify-between items-center pt-6">
+              <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 pt-4 sm:pt-6">
                 <Button
                   type="button"
                   disabled={current === 0}
                   onClick={handlePrevious}
-                  className="flex items-center gap-2 px-6 w-full py-3.5 rounded-none bg-gray-200 text-gray-400 font-medium text-sm hover:bg-gray-300 hover:text-gray-500"
+                  className="flex items-center justify-center gap-2 px-6 w-full sm:w-auto py-3.5 rounded-none bg-gray-200 text-gray-400 font-medium text-sm hover:bg-gray-300 hover:text-gray-500"
                 >
                   <ChevronLeft size={16} /> Previous
                 </Button>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-center gap-4 order-first sm:order-none">
                   <TimerDonut totalSeconds={totalSeconds} timeLeft={timeLeft} />
                 </div>
 
                 {current < questions.length - 1 ? (
                   <Button
                     type="submit"
-                    className="flex items-center py-3.5 gap-2 px-6 w-full rounded-none bg-blue-600 text-white font-medium text-sm hover:bg-blue-700"
+                    className="flex items-center justify-center py-3.5 gap-2 px-6 w-full sm:w-auto rounded-none bg-blue-600 text-white font-medium text-sm hover:bg-blue-700"
                   >
                     Next <ChevronRight size={16} />
                   </Button>
@@ -409,7 +410,7 @@ export default function ExamPage({ params }: Props) {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-6 w-full py-3.5 rounded-none bg-blue-600 text-white font-medium text-sm hover:bg-blue-700"
+                    className="px-6 w-full sm:w-auto py-3.5 rounded-none bg-blue-600 text-white font-medium text-sm hover:bg-blue-700"
                   >
                     {isSubmitting ? "Submitting..." : "Submit Exam"}
                   </Button>
